@@ -11,7 +11,11 @@ const Home = () => {
   const [searchCount, setSearchCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
-
+  const calculatePrice = (title, author) => {
+    const titleLength = title.length;
+    const authorLength = author.length;
+    return titleLength + authorLength;
+  };
   useEffect(() => {
     if (
       titleQuery.trim() === "" &&
@@ -56,6 +60,10 @@ const Home = () => {
           const bookId = `book-${book.cover_i}-${
             book.title
           }-${book.author_name?.join("-")}-${randomNum}`;
+          const price = calculatePrice(
+            book.title,
+            book.author_name?.join(", ") || "Unknown Author"
+          );
 
           return {
             id: bookId,
@@ -63,6 +71,8 @@ const Home = () => {
             author: book.author_name?.join(", ") || "Unknown Author",
             publishDate: book.publish_date?.[0] || "Unknown Publish Date",
             coverUrl: coverUrl,
+            price: price,
+            quantity: "1",
           };
         });
 
@@ -214,7 +224,10 @@ const Home = () => {
                   </li>
                 ) : (
                   <>
-                    <ProductGrid products={searchResults.slice(0, page * 30)} />
+                    <ProductGrid
+                      products={searchResults.slice(0, page * 30)}
+                      calculatePrice={calculatePrice}
+                    />
                     {searchResults.length > page * 30 && (
                       <li className="list-group-item text-center">
                         {isLoading ? (

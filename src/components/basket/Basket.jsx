@@ -1,20 +1,20 @@
 /* eslint-disable max-len */
-import { BasketItem, BasketToggle } from '@/components/basket';
-import { Boundary, Modal } from '@/components/common';
-import { CHECKOUT_STEP_1 } from '@/constants/routes';
-import firebase from 'firebase/firebase';
-import { calculateTotal, displayMoney } from '@/helpers/utils';
-import { useDidMount, useModal } from '@/hooks';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
-import { clearBasket } from '@/redux/actions/basketActions';
+import { BasketItem, BasketToggle } from "@/components/basket";
+import { Boundary, Modal } from "@/components/common";
+import { CHECKOUT_STEP_1 } from "@/constants/routes";
+import firebase from "firebase/firebase";
+import { calculateTotal, displayMoney } from "@/helpers/utils";
+import { useDidMount, useModal } from "@/hooks";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
+import { clearBasket } from "@/redux/actions/basketActions";
 
 const Basket = () => {
   const { isOpenModal, onOpenModal, onCloseModal } = useModal();
   const { basket, user } = useSelector((state) => ({
     basket: state.basket,
-    user: state.auth
+    user: state.auth,
   }));
   const history = useHistory();
   const { pathname } = useLocation();
@@ -23,9 +23,10 @@ const Basket = () => {
 
   useEffect(() => {
     if (didMount && firebase.auth.currentUser && basket.length !== 0) {
-      firebase.saveBasketItems(basket, firebase.auth.currentUser.uid)
+      firebase
+        .saveBasketItems(basket, firebase.auth.currentUser.uid)
         .then(() => {
-          console.log('Item saved to basket');
+          console.log("Item saved to basket");
         })
         .catch((e) => {
           console.log(e);
@@ -34,8 +35,8 @@ const Basket = () => {
   }, [basket.length]);
 
   const onCheckOut = () => {
-    if ((basket.length !== 0 && user)) {
-      document.body.classList.remove('is-basket-open');
+    if (basket.length !== 0 && user) {
+      document.body.classList.remove("is-basket-open");
       history.push(CHECKOUT_STEP_1);
     } else {
       onOpenModal();
@@ -44,7 +45,7 @@ const Basket = () => {
 
   const onSignInClick = () => {
     onCloseModal();
-    document.body.classList.remove('basket-open');
+    document.body.classList.remove("basket-open");
     history.push(CHECKOUT_STEP_1);
   };
 
@@ -54,12 +55,9 @@ const Basket = () => {
     }
   };
 
-  return user && user.role === 'ADMIN' ? null : (
+  return user && user.role === "ADMIN" ? null : (
     <Boundary>
-      <Modal
-        isOpen={isOpenModal}
-        onRequestClose={onCloseModal}
-      >
+      <Modal isOpen={isOpenModal} onRequestClose={onCloseModal}>
         <p className="text-center">You must sign in to continue checking out</p>
         <br />
         <div className="d-flex-center">
@@ -86,9 +84,7 @@ const Basket = () => {
             <h3 className="basket-header-title">
               My Basket &nbsp;
               <span>
-                (
-                {` ${basket.length} ${basket.length > 1 ? 'items' : 'item'}`}
-                )
+                ({` ${basket.length} ${basket.length > 1 ? "items" : "item"}`})
               </span>
             </h3>
             <BasketToggle>
@@ -130,12 +126,14 @@ const Basket = () => {
           <div className="basket-total">
             <p className="basket-total-title">Subtotal Amout:</p>
             <h2 className="basket-total-amount">
-              {displayMoney(calculateTotal(basket.map((product) => product.price * product.quantity)))}
+              {displayMoney(
+                calculateTotal(basket.map((product) => product.price))
+              )}
             </h2>
           </div>
           <button
             className="basket-checkout-button button"
-            disabled={basket.length === 0 || pathname === '/checkout'}
+            disabled={basket.length === 0 || pathname === "/checkout"}
             onClick={onCheckOut}
             type="button"
           >

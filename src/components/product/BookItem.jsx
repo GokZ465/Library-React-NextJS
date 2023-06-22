@@ -18,7 +18,7 @@ const BookItem = ({ book, isItemOnBasket, addToBasket }) => {
   const itemOnBasket = isItemOnBasket ? isItemOnBasket(book.id) : false;
 
   const handleAddToBasket = () => {
-    if (addToBasket) addToBasket({ ...book, selectedSize: book.sizes[0] });
+    if (addToBasket) addToBasket({ ...book, selectedQuantity: '10' });
   };
 
   if (!book) {

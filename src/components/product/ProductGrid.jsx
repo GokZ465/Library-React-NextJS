@@ -4,7 +4,7 @@ import React from "react";
 import ProductItem from "./ProductItem";
 import BookItem from "./BookItem";
 
-const ProductGrid = ({ products }) => {
+const ProductGrid = ({ products , calculatePrice }) => {
   const { addToBasket, isItemOnBasket } = useBasket();
 
   return (

@@ -10,19 +10,19 @@ import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
 
-const Shop = ({ store }) => {
+const Shop = ({}) => {
   useDocumentTitle("Shop | Library");
   useScrollTop();
 
-  // const store = useSelector(
-  //   (state) => ({
-  //     filteredProducts: selectFilter(state.products.items, state.filter),
-  //     products: state.products,
-  //     requestStatus: state.app.requestStatus,
-  //     isLoading: state.app.loading,
-  //   }),
-  //   shallowEqual
-  // );
+  const store = useSelector(
+    (state) => ({
+      filteredProducts: selectFilter(state.products.items, state.filter),
+      products: state.products,
+      requestStatus: state.app.requestStatus,
+      isLoading: state.app.loading,
+    }),
+    shallowEqual
+  );
 
   return (
     <main className="content">
