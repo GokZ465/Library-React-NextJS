@@ -1,19 +1,15 @@
-import { MessageDisplay } from '@/components/common';
-import { ProductShowcaseGrid } from '@/components/product';
-import { useDocumentTitle, useFeaturedProducts, useScrollTop } from '@/hooks';
-import bannerImg from '@/images/banner-guy.png';
-import React from 'react';
+import { MessageDisplay } from "@/components/common";
+import { ProductShowcaseGrid } from "@/components/product";
+import { useDocumentTitle, useFeaturedProducts, useScrollTop } from "@/hooks";
+import bannerImg from "@/images/banner-guy.png";
+import React from "react";
 
 const FeaturedProducts = () => {
-  useDocumentTitle('Featured Products | Salinaka');
+  useDocumentTitle("Featured Products | Library");
   useScrollTop();
 
-  const {
-    featuredProducts,
-    fetchFeaturedProducts,
-    isLoading,
-    error
-  } = useFeaturedProducts();
+  const { featuredProducts, fetchFeaturedProducts, isLoading, error } =
+    useFeaturedProducts();
 
   return (
     <main className="content">
@@ -28,7 +24,7 @@ const FeaturedProducts = () => {
         </div>
         <div className="display">
           <div className="product-display-grid">
-            {(error && !isLoading) ? (
+            {error && !isLoading ? (
               <MessageDisplay
                 message={error}
                 action={fetchFeaturedProducts}

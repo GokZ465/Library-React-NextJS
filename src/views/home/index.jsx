@@ -1,92 +1,176 @@
-import { ArrowRightOutlined } from '@ant-design/icons';
-import { MessageDisplay } from '@/components/common';
-import { ProductShowcaseGrid } from '@/components/product';
-import { FEATURED_PRODUCTS, RECOMMENDED_PRODUCTS, SHOP } from '@/constants/routes';
-import {
-  useDocumentTitle, useFeaturedProducts, useRecommendedProducts, useScrollTop
-} from '@/hooks';
-import bannerImg from '@/images/banner-girl.png';
-import React from 'react';
-import { Link } from 'react-router-dom';
-
+import { useState, useEffect } from "react";
 
 const Home = () => {
-  useDocumentTitle('Salinaka | Home');
-  useScrollTop();
+  const [titleQuery, setTitleQuery] = useState("");
+  const [authorQuery, setAuthorQuery] = useState("");
+  const [genreQuery, setGenreQuery] = useState("");
+  const [publishDateRange, setPublishDateRange] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchCount, setSearchCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const {
-    featuredProducts,
-    fetchFeaturedProducts,
-    isLoading: isLoadingFeatured,
-    error: errorFeatured
-  } = useFeaturedProducts(6);
-  const {
-    recommendedProducts,
-    fetchRecommendedProducts,
-    isLoading: isLoadingRecommended,
-    error: errorRecommended
-  } = useRecommendedProducts(6);
+  useEffect(() => {
+    if (
+      titleQuery.trim() === "" &&
+      authorQuery.trim() === "" &&
+      genreQuery.trim() === "" &&
+      publishDateRange.trim() === ""
+    ) {
+      setSearchResults([]);
+      setSearchCount(0);
+    } else {
+      searchBooks();
+    }
+  }, [titleQuery, authorQuery, genreQuery, publishDateRange]);
+
+  const searchBooks = () => {
+    setIsLoading(true);
+    let searchUrl = "https://openlibrary.org/search.json?";
+
+    if (titleQuery.trim() !== "") {
+      searchUrl += `title=${encodeURIComponent(titleQuery)}&`;
+    }
+
+    if (authorQuery.trim() !== "") {
+      searchUrl += `author=${encodeURIComponent(authorQuery)}&`;
+    }
+
+    if (genreQuery.trim() !== "") {
+      searchUrl += `subject=${encodeURIComponent(genreQuery)}&`;
+    }
+
+    fetch(searchUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        let books = data.docs.map((book) => {
+          const coverUrl = `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`;
+          return {
+            title: book.title,
+            author: book.author_name?.join(", ") || "Unknown Author",
+            publishDate: book.publish_date?.[0] || "Unknown Publish Date",
+            coverUrl: book.cover_i ? coverUrl : null,
+          };
+        });
+
+        if (publishDateRange.trim() !== "") {
+          const [startYear, endYear] = publishDateRange.split("-").map(Number);
+          books = books.filter((book) => {
+            const publishYear = Number(book.publishDate);
+            return (
+              !isNaN(publishYear) &&
+              publishYear >= startYear &&
+              publishYear <= endYear
+            );
+          });
+        }
+
+        setSearchResults(books);
+        setSearchCount(books.length);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log("Book Search Error:", error);
+        setIsLoading(false);
+      });
+  };
 
   return (
-    <main className="content">
-      <div className="home">
-        <div className="banner">
-          <div className="banner-desc">
-            <h1 className="text-thin">
-              <strong>See</strong>
-              &nbsp;everything with&nbsp;
-              <strong>Clarity</strong>
-            </h1>
-            <p>
-              Buying eyewear should leave you happy and good-looking, with money in your pocket.
-              Glasses, sunglasses, and contacts—we’ve got your eyes covered.
-            </p>
-            <br />
-            <Link to={SHOP} className="button">
-              Shop Now &nbsp;
-              <ArrowRightOutlined />
-            </Link>
+    <div className="container">
+      <h1 className="text-center">Book Search</h1>
+      <div className="row justify-content-center mb-3">
+        <div className="col-6">
+          <div className="input-group">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by Title"
+              value={titleQuery}
+              onChange={(event) => {
+                setTitleQuery(event.target.value);
+              }}
+            />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by Author"
+              value={authorQuery}
+              onChange={(event) => {
+                setAuthorQuery(event.target.value);
+              }}
+            />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by Genre"
+              value={genreQuery}
+              onChange={(event) => {
+                setGenreQuery(event.target.value);
+              }}
+            />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by Publish Date Range (e.g., 2000-2010)"
+              value={publishDateRange}
+              onChange={(event) => {
+                setPublishDateRange(event.target.value);
+              }}
+            />
+            <button
+              className="btn btn-primary"
+              onClick={searchBooks}
+              disabled={isLoading}
+            >
+              Search
+            </button>
           </div>
-          <div className="banner-img"><img src={bannerImg} alt="" /></div>
         </div>
-        <div className="display">
-          <div className="display-header">
-            <h1>Featured Products</h1>
-            <Link to={FEATURED_PRODUCTS}>See All</Link>
-          </div>
-          {(errorFeatured && !isLoadingFeatured) ? (
-            <MessageDisplay
-              message={errorFeatured}
-              action={fetchFeaturedProducts}
-              buttonLabel="Try Again"
-            />
+      </div>
+      <div className="row justify-content-center">
+        <div className="col-6">
+          {isLoading ? (
+            <p className="text-center">Loading...</p>
           ) : (
-            <ProductShowcaseGrid
-              products={featuredProducts}
-              skeletonCount={6}
-            />
-          )}
-        </div>
-        <div className="display">
-          <div className="display-header">
-            <h1>Recommended Products</h1>
-            <Link to={RECOMMENDED_PRODUCTS}>See All</Link>
-          </div>
-          {(errorRecommended && !isLoadingRecommended) ? (
-            <MessageDisplay
-              message={errorRecommended}
-              action={fetchRecommendedProducts}
-              buttonLabel="Try Again"
-            />
-          ) : (
-            <ProductShowcaseGrid
-              products={recommendedProducts}
-              skeletonCount={6}
-            />
+            <div>
+              <p className="text-center">
+                Search results: {searchCount} books found
+              </p>
+              <ul className="list-group">
+                {searchResults.length === 0 ? (
+                  <li className="list-group-item text-center">
+                    No results found
+                  </li>
+                ) : (
+                  searchResults.map((book, index) => (
+                    <li
+                      key={index}
+                      className="list-group-item d-flex justify-content-between align-items-center"
+                    >
+                      <div className="d-flex align-items-center">
+                        {book.coverUrl && (
+                          <img
+                            src={book.coverUrl}
+                            alt="Book Cover"
+                            style={{ width: "100px", marginRight: "10px" }}
+                          />
+                        )}
+                        <div>
+                          <strong>Title:</strong> {book.title}
+                          <br />
+                          <strong>Author:</strong> {book.author}
+                          <br />
+                          <strong>Publish Date:</strong> {book.publishDate}
+                        </div>
+                      </div>
+                    </li>
+                  ))
+                )}
+              </ul>
+            </div>
           )}
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 

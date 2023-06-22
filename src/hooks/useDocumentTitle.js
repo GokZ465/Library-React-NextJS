@@ -1,11 +1,11 @@
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect } from "react";
 
 const useDocumentTitle = (title) => {
   useLayoutEffect(() => {
     if (title) {
       document.title = title;
     } else {
-      document.title = 'Salinaka - eCommerce React App';
+      document.title = "Library - eCommerce React App";
     }
   }, [title]);
 };

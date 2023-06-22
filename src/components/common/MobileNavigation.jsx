@@ -1,17 +1,15 @@
-import { BasketToggle } from '@/components/basket';
-import { HOME, SIGNIN } from '@/constants/routes';
-import PropType from 'prop-types';
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import UserNav from '@/views/account/components/UserAvatar';
-import Badge from './Badge';
-import FiltersToggle from './FiltersToggle';
-import SearchBar from './SearchBar';
+import { BasketToggle } from "@/components/basket";
+import { HOME, SIGNIN } from "@/constants/routes";
+import PropType from "prop-types";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import UserNav from "@/views/account/components/UserAvatar";
+import Badge from "./Badge";
+import FiltersToggle from "./FiltersToggle";
+import SearchBar from "./SearchBar";
 
 const Navigation = (props) => {
-  const {
-    isAuthenticating, basketLength, disabledPaths, user
-  } = props;
+  const { isAuthenticating, basketLength, disabledPaths, user } = props;
   const { pathname } = useLocation();
 
   const onClickLink = (e) => {
@@ -23,7 +21,7 @@ const Navigation = (props) => {
       <div className="mobile-navigation-main">
         <div className="mobile-navigation-logo">
           <Link onClick={onClickLink} to={HOME}>
-            <h2>SALINAKA</h2>
+            <h2>Library</h2>
           </Link>
         </div>
 
@@ -35,9 +33,11 @@ const Navigation = (props) => {
               disabled={disabledPaths.includes(pathname)}
               type="button"
             >
-
               <Badge count={basketLength}>
-                <i className="fa fa-shopping-bag" style={{ fontSize: '2rem' }} />
+                <i
+                  className="fa fa-shopping-bag"
+                  style={{ fontSize: "2rem" }}
+                />
               </Badge>
             </button>
           )}
@@ -80,10 +80,7 @@ Navigation.propTypes = {
   isAuthenticating: PropType.bool.isRequired,
   basketLength: PropType.number.isRequired,
   disabledPaths: PropType.arrayOf(PropType.string).isRequired,
-  user: PropType.oneOfType([
-    PropType.bool,
-    PropType.object
-  ]).isRequired
+  user: PropType.oneOfType([PropType.bool, PropType.object]).isRequired,
 };
 
 export default Navigation;
