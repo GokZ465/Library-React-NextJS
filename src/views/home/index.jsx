@@ -1,3 +1,4 @@
+import { BookFilter, ProductGrid } from "@/components/product";
 import { useState, useEffect } from "react";
 
 const Home = () => {
@@ -8,6 +9,7 @@ const Home = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchCount, setSearchCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     if (
@@ -25,6 +27,7 @@ const Home = () => {
 
   const searchBooks = () => {
     setIsLoading(true);
+    setPage(1); // Reset the page number
     let searchUrl = "https://openlibrary.org/search.json?";
 
     if (titleQuery.trim() !== "") {
@@ -44,7 +47,13 @@ const Home = () => {
       .then((data) => {
         let books = data.docs.map((book) => {
           const coverUrl = `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`;
+          const randomNum = Math.floor(Math.random() * 10000);
+          const bookId = `book-${book.cover_i}-${
+            book.title
+          }-${book.author_name?.join("-")}-${randomNum}`;
+
           return {
+            id: bookId,
             title: book.title,
             author: book.author_name?.join(", ") || "Unknown Author",
             publishDate: book.publish_date?.[0] || "Unknown Publish Date",
@@ -73,6 +82,59 @@ const Home = () => {
         setIsLoading(false);
       });
   };
+
+  const loadMoreBooks = () => {
+    setPage((prevPage) => prevPage + 1); // Increment the page number
+  };
+
+  useEffect(() => {
+    if (page > 1) {
+      setIsLoading(true);
+      let searchUrl = "https://openlibrary.org/search.json?";
+      const startIndex = (page - 1) * 30;
+
+      if (titleQuery.trim() !== "") {
+        searchUrl += `title=${encodeURIComponent(titleQuery)}&`;
+      }
+
+      if (authorQuery.trim() !== "") {
+        searchUrl += `author=${encodeURIComponent(authorQuery)}&`;
+      }
+
+      if (genreQuery.trim() !== "") {
+        searchUrl += `subject=${encodeURIComponent(genreQuery)}&`;
+      }
+
+      searchUrl += `start=${startIndex}&`;
+
+      fetch(searchUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          let books = data.docs.map((book) => {
+            const coverUrl = `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`;
+            const randomNum = Math.floor(Math.random() * 10000);
+            const bookId = `book-${book.cover_i}-${
+              book.title
+            }-${book.author_name?.join("-")}-${randomNum}`;
+
+            return {
+              id: bookId,
+              title: book.title,
+              author: book.author_name?.join(", ") || "Unknown Author",
+              publishDate: book.publish_date?.[0] || "Unknown Publish Date",
+              coverUrl: book.cover_i ? coverUrl : null,
+            };
+          });
+
+          setSearchResults((prevResults) => [...prevResults, ...books]);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log("Book Load More Error:", error);
+          setIsLoading(false);
+        });
+    }
+  }, [page]);
 
   return (
     <div className="container">
@@ -123,6 +185,7 @@ const Home = () => {
             >
               Search
             </button>
+            <BookFilter searchCount={searchCount} />
           </div>
         </div>
       </div>
@@ -141,29 +204,20 @@ const Home = () => {
                     No results found
                   </li>
                 ) : (
-                  searchResults.map((book, index) => (
-                    <li
-                      key={index}
-                      className="list-group-item d-flex justify-content-between align-items-center"
-                    >
-                      <div className="d-flex align-items-center">
-                        {book.coverUrl && (
-                          <img
-                            src={book.coverUrl}
-                            alt="Book Cover"
-                            style={{ width: "100px", marginRight: "10px" }}
-                          />
-                        )}
-                        <div>
-                          <strong>Title:</strong> {book.title}
-                          <br />
-                          <strong>Author:</strong> {book.author}
-                          <br />
-                          <strong>Publish Date:</strong> {book.publishDate}
-                        </div>
-                      </div>
-                    </li>
-                  ))
+                  <>
+                    <ProductGrid products={searchResults.slice(0, page * 30)} />
+                    {searchResults.length > page * 30 && (
+                      <li className="list-group-item text-center">
+                        <button
+                          className="btn btn-primary"
+                          onClick={loadMoreBooks}
+                          disabled={isLoading}
+                        >
+                          Load More
+                        </button>
+                      </li>
+                    )}
+                  </>
                 )}
               </ul>
             </div>
