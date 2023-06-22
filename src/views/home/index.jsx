@@ -1,5 +1,6 @@
 import { BookFilter, ProductGrid } from "@/components/product";
 import { useState, useEffect } from "react";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const Home = () => {
   const [titleQuery, setTitleQuery] = useState("");
@@ -46,6 +47,10 @@ const Home = () => {
       .then((response) => response.json())
       .then((data) => {
         let books = data.docs.map((book) => {
+          if (!book.cover_i) {
+            return null;
+          }
+
           const coverUrl = `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`;
           const randomNum = Math.floor(Math.random() * 10000);
           const bookId = `book-${book.cover_i}-${
@@ -57,9 +62,11 @@ const Home = () => {
             title: book.title,
             author: book.author_name?.join(", ") || "Unknown Author",
             publishDate: book.publish_date?.[0] || "Unknown Publish Date",
-            coverUrl: book.cover_i ? coverUrl : null,
+            coverUrl: coverUrl,
           };
         });
+
+        books = books.filter((book) => book !== null); // Remove null elements
 
         if (publishDateRange.trim() !== "") {
           const [startYear, endYear] = publishDateRange.split("-").map(Number);
@@ -192,7 +199,9 @@ const Home = () => {
       <div className="row justify-content-center">
         <div className="col-6">
           {isLoading ? (
-            <p className="text-center">Loading...</p>
+            <SkeletonTheme color="#f3f3f3" highlightColor="#ecebeb">
+              <Skeleton height={150} count={3} />
+            </SkeletonTheme>
           ) : (
             <div>
               <p className="text-center">
@@ -208,13 +217,22 @@ const Home = () => {
                     <ProductGrid products={searchResults.slice(0, page * 30)} />
                     {searchResults.length > page * 30 && (
                       <li className="list-group-item text-center">
-                        <button
-                          className="btn btn-primary"
-                          onClick={loadMoreBooks}
-                          disabled={isLoading}
-                        >
-                          Load More
-                        </button>
+                        {isLoading ? (
+                          <SkeletonTheme
+                            color="#f3f3f3"
+                            highlightColor="#ecebeb"
+                          >
+                            <Skeleton width={120} height={40} />
+                          </SkeletonTheme>
+                        ) : (
+                          <button
+                            className="btn btn-primary"
+                            onClick={loadMoreBooks}
+                            disabled={isLoading}
+                          >
+                            Load More
+                          </button>
+                        )}
                       </li>
                     )}
                   </>
