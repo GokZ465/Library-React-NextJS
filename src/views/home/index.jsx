@@ -54,12 +54,16 @@ const Home = () => {
           if (!book.cover_i) {
             return null;
           }
+          const coverUrls = Array.isArray(book.cover_i)
+            ? book.cover_i.map(
+                (coverId) =>
+                  `https://covers.openlibrary.org/b/id/${coverId}-L.jpg`
+              )
+            : [];
 
           const coverUrl = `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`;
           const randomNum = Math.floor(Math.random() * 10000);
-          const bookId = `book-${book.cover_i}-${
-            book.title
-          }-${book.author_name?.join("-")}-${randomNum}`;
+          const bookId = book.key;
           const price = calculatePrice(
             book.title,
             book.author_name?.join(", ") || "Unknown Author"
@@ -71,8 +75,19 @@ const Home = () => {
             author: book.author_name?.join(", ") || "Unknown Author",
             publishDate: book.publish_date?.[0] || "Unknown Publish Date",
             coverUrl: coverUrl,
+            coverUrls: coverUrls,
             price: price,
-            quantity: "1",
+            quantity: 1,
+
+            description: book.description || "",
+            publisher: book.publisher || "",
+            isbn: book.isbn ? book.isbn[0] : "",
+            edition: book.edition_key ? book.edition_key[0] : "",
+            language: book.language ? book.language[0] : "",
+            subject: book.subject ? book.subject.join(", ") : "",
+            contributor: book.contributor ? book.contributor.join(", ") : "",
+            numberOfPages: book.number_of_pages || 0,
+            publishPlace: book.publish_place ? book.publish_place[0] : "",
           };
         });
 
@@ -80,8 +95,10 @@ const Home = () => {
 
         if (publishDateRange.trim() !== "") {
           const [startYear, endYear] = publishDateRange.split("-").map(Number);
+
           books = books.filter((book) => {
             const publishYear = Number(book.publishDate);
+
             return (
               !isNaN(publishYear) &&
               publishYear >= startYear &&
@@ -130,9 +147,7 @@ const Home = () => {
           let books = data.docs.map((book) => {
             const coverUrl = `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`;
             const randomNum = Math.floor(Math.random() * 10000);
-            const bookId = `book-${book.cover_i}-${
-              book.title
-            }-${book.author_name?.join("-")}-${randomNum}`;
+            const bookId = book.key;
 
             return {
               id: bookId,
@@ -140,6 +155,21 @@ const Home = () => {
               author: book.author_name?.join(", ") || "Unknown Author",
               publishDate: book.publish_date?.[0] || "Unknown Publish Date",
               coverUrl: book.cover_i ? coverUrl : null,
+              coverUrls: coverUrls,
+              price: calculatePrice(
+                book.title,
+                book.author_name?.join(", ") || "Unknown Author"
+              ),
+              quantity: 1,
+              description: book.description || "",
+              publisher: book.publisher || "",
+              isbn: book.isbn ? book.isbn[0] : "",
+              edition: book.edition_key ? book.edition_key[0] : "",
+              language: book.language ? book.language[0] : "",
+              subject: book.subject ? book.subject.join(", ") : "",
+              contributor: book.contributor ? book.contributor.join(", ") : "",
+              numberOfPages: book.number_of_pages || 0,
+              publishPlace: book.publish_place ? book.publish_place[0] : "",
             };
           });
 
@@ -224,6 +254,7 @@ const Home = () => {
                   </li>
                 ) : (
                   <>
+                    {console.log(searchResults)}
                     <ProductGrid
                       products={searchResults.slice(0, page * 30)}
                       calculatePrice={calculatePrice}

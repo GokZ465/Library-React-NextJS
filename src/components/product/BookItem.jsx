@@ -12,13 +12,16 @@ const BookItem = ({ book, isItemOnBasket, addToBasket }) => {
     if (!book) return;
 
     if (book.id) {
-      history.push(`/book/${book.id}`);
+      history.push({
+        pathname: `/product${book.id}`,
+        state: { book: book }, // Pass the entire book object as state
+      });
     }
   };
   const itemOnBasket = isItemOnBasket ? isItemOnBasket(book.id) : false;
 
   const handleAddToBasket = () => {
-    if (addToBasket) addToBasket({ ...book, selectedQuantity: '10' });
+    if (addToBasket) addToBasket({ ...book, selectedQuantity: "10" });
   };
 
   if (!book) {
