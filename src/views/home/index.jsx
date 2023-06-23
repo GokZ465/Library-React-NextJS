@@ -107,7 +107,7 @@ const Home = () => {
           });
         }
 
-        setSearchResults(books);
+        setSearchResults(books.reverse());
         setSearchCount(books.length);
         setIsLoading(false);
       })
@@ -187,11 +187,11 @@ const Home = () => {
     <div className="container">
       <h1 className="text-center">Book Search</h1>
       <div className="row justify-content-center mb-3">
-        <div className="col-6">
-          <div className="input-group">
+        <div className="col-6 ReactModal__Content">
+          <div className="input-group filters-toggle-sub">
             <input
               type="text"
-              className="form-control"
+              className="filters-field form-control search-input"
               placeholder="Search by Title"
               value={titleQuery}
               onChange={(event) => {
@@ -200,7 +200,7 @@ const Home = () => {
             />
             <input
               type="text"
-              className="form-control"
+              className="filters-field form-control"
               placeholder="Search by Author"
               value={authorQuery}
               onChange={(event) => {
@@ -209,7 +209,7 @@ const Home = () => {
             />
             <input
               type="text"
-              className="form-control"
+              className="filters-field form-control"
               placeholder="Search by Genre"
               value={genreQuery}
               onChange={(event) => {
@@ -218,7 +218,7 @@ const Home = () => {
             />
             <input
               type="text"
-              className="form-control"
+              className="filters-field form-control"
               placeholder="Search by Publish Date Range (e.g., 2000-2010)"
               value={publishDateRange}
               onChange={(event) => {
@@ -226,7 +226,7 @@ const Home = () => {
               }}
             />
             <button
-              className="btn btn-primary"
+              className="filters-button filters-button button button-small"
               onClick={searchBooks}
               disabled={isLoading}
             >

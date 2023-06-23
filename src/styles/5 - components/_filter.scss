@@ -1,4 +1,5 @@
 .filters {
+  
   display: flex;
   flex-wrap: wrap;
   position: relative;
@@ -39,6 +40,7 @@
 }
 
 .filters-toggle-sub {
+  // margin-top: 20vw;
   width: 400px;
   height: 360px;
   background: $white;

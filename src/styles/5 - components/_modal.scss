@@ -8,6 +8,7 @@
 
 .ReactModal__Content--before-close {
   transform: translate(-50%, -50%) scale(0) !important;
+ 
 }
 
 .modal-close-button {
@@ -31,6 +32,7 @@
 }
 
 .ReactModal__Content {
+  margin-top: 10vh;
   @include mobile {
     width: 90%;
   }
