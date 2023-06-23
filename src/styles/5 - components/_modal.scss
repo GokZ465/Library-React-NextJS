@@ -33,7 +33,12 @@
 
 .ReactModal__Content {
   margin-top: 10vh;
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  justify-content: center;
   @include mobile {
     width: 90%;
   }
 }
+
