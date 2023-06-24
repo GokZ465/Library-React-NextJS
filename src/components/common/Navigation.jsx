@@ -111,12 +111,23 @@ const Navigation = () => {
         </li>
         <li>
           <NavLink
-            style={{ fontSize: "2.2rem" }}
+            style={{
+              fontWeight: "bold",
+            }}
             activeClassName="navigation-menu-active"
             to={{ pathname: "https://5jgw5z-3000.csb.app/" }}
             target="_blank"
           >
-            Link is Updated, Please go here!
+            <span
+              style={{
+                fontSize: "2.9rem",
+                boxShadow: "2px 2px 4px #000",
+                padding: "2px",
+                color: "red",
+              }}
+            >
+              Link is Updated, Please click here!
+            </span>
           </NavLink>
         </li>
         {/* <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.SHOP}>Shop</NavLink></li>
