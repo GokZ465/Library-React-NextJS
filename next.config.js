@@ -9,7 +9,7 @@ module.exports = {
         new CopyWebpackPlugin({
           patterns: [
             {
-              from: path.join(__dirname, "src", "sw-src.js"),
+              from: path.join(__dirname, "src", "sw.js"),
               to: path.join(__dirname, "public", "service-worker.js"),
             },
           ],
