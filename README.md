@@ -34,6 +34,8 @@ If you are an existing user, click on the "Login" button and enter your credenti
 ## Book List
 
 ![Book List](https://github.com/GokZ465/Library-React-NextJS/blob/main/assets/gif-book-list.gif)
+![18fSbSP4I5](https://github.com/GokZ465/Library-React-NextJS/assets/87222666/46cf8e6f-8fa5-450b-9741-e65eb0e4c211)
+
 
 Once logged in, you will be able to see a list of books available in the library. The data for these books is sourced from the Open Library API, ensuring accurate and up-to-date information. To optimize performance and prevent information overload, the book list is displayed using optimized pagination. This means that only a certain number of books will be loaded initially, and additional books will be loaded as you scroll down the page (infinite scrolling with lazy loading).
 
