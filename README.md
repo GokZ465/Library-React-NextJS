@@ -22,6 +22,7 @@ Pwa with Mobile Responsiveness for any screen sizes , all pages are curated for 
 
 
 ![Dark and Light](https://github.com/GokZ465/Library-React-NextJS/blob/main/assets/gif-dark-light.gif)
+![TKME5EJBib](https://github.com/GokZ465/Library-React-NextJS/assets/87222666/10494f78-36bf-4033-8acd-37759df652bd)
 
 The Library Management Page offers both Dark and Light modes to suit your preference. You can easily switch between the two modes by clicking on the respective toggle switch or button. Choose the mode that provides the best reading experience for you.
 
