@@ -14,10 +14,12 @@ Pwa with Mobile Responsiveness for any screen sizes , all pages are curated for 
   - **Firebase Authentication**: User authentication is seamlessly integrated into the Library Management Page using Firebase Authentication. Users can sign up and log in to the platform using their email and password. Additionally, the platform supports multiple social media login providers, allowing users to sign in with their existing social media accounts for added convenience.
 
   ![Profile Updates](https://github.com/GokZ465/Library-React-NextJS/blob/main/assets/gif-signup.gif)
+  ![6TcfJiMSdQ](https://github.com/GokZ465/Library-React-NextJS/assets/87222666/c84e9f2d-242f-4e98-aef7-acb52f2e5f66)
 
   - **Firebase Storage**: Firebase Storage is utilized to store users' images securely. Users can upload their profile pictures or any other images related to their library collection. Firebase Storage ensures reliable and scalable storage for your application's assets.
 
 ## Dark and Light Modes
+
 
 ![Dark and Light](https://github.com/GokZ465/Library-React-NextJS/blob/main/assets/gif-dark-light.gif)
 
@@ -50,6 +52,7 @@ The Library Management Page features a powerful search bar that allows you to se
 In addition to the search bar, you can also utilize advanced filtering options to narrow down your search results. Filter books by genre, author, or publication year to find precisely what you're looking for.
 
 To add books to your cart, simply click on the "Add to Cart" button next to the desired books. The selected books will be added to your cart, and you can proceed to the checkout process.
+![o3HTCqotFi](https://github.com/GokZ465/Library-React-NextJS/assets/87222666/e9f7297b-d387-4dc3-8ea1-8c505a06c957)
 
 ## Admin Dashboard (Book Management)
 
