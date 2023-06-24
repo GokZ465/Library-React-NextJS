@@ -7,7 +7,11 @@
   --nav-bg-scrolled: #fff; 
   --nav-bg-shadow: 0 5px 10px rgba(0, 0, 0, .02);
 }
-
+.dark {
+  --nav-bg: #13384f;
+  --nav-bg-scrolled: #082638; 
+  --nav-bg-shadow: 0 5px 10px rgba(106, 106, 106, 0.02);
+}
 $nav-bg: #f8f8f8;
 $nav-bg-scrolled: #fff;
 

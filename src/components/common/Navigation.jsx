@@ -11,15 +11,17 @@ import Badge from "./Badge";
 import FiltersToggle from "./FiltersToggle";
 import MobileNavigation from "./MobileNavigation";
 import SearchBar from "./SearchBar";
+import { useTheme } from "next-themes";
+import styles from "./DarkModeToggle.module.css";
 
 const Navigation = () => {
   const navbar = useRef(null);
   const { pathname } = useLocation();
-  // const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
-  // const toggleTheme = () => {
-  //   setTheme(theme === "light" ? "dark" : "light");
-  // };
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
   const store = useSelector((state) => ({
     basketLength: state.basket.length,
     user: state.auth,
@@ -96,11 +98,16 @@ const Navigation = () => {
             How to
           </NavLink>
         </li>
-        {/* <li>
-          <button onClick={toggleTheme} style={{ marginLeft: "0.2rem" }}>
-            {theme === "dark" ? "light" : "dark"}
-          </button>
-        </li> */}
+        <li>
+          <div className={styles.container} onClick={toggleTheme}>
+            <div className={styles.icon}>🌙</div>
+            <div className={styles.icon}>🔆</div>
+            <div
+              className={styles.ball}
+              style={theme === "light" ? { left: "2px" } : { right: "2px" }}
+            />
+          </div>
+        </li>
         {/* <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.SHOP}>Shop</NavLink></li>
         <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.RECOMMENDED_PRODUCTS}>Recommended</NavLink></li> */}
       </ul>
