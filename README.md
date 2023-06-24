@@ -3,7 +3,8 @@
 # Library Management Page
 
 Welcome to the Library Management Page! This guide will walk you through the various modules and features available on this platform.
-
+## PWA Progressive Web App 
+Pwa with Mobile Responsiveness for any screen sizes , all pages are curated for mobile responsiveness and PWA
 ## Tech Stack
 
 - **React/Next.js**: The Library Management Page is built using React, a popular JavaScript library for building user interfaces, and Next.js, a framework for server-rendered React applications. This powerful combination provides a seamless development experience and ensures efficient rendering and routing of pages.
