@@ -183,7 +183,11 @@ h6 {
   background-color: #a5a5a5;
   color: #ffffff;
 }
-[data-theme='dark'] .product-list-wrapper h2,h4,h3{
+[data-theme='dark'] .product-list-wrapper h2,h4{
+  
+  color: #ffffff;
+}
+[data-theme='dark'] .product-list-wrapper h3{
   
   color: #ffffff;
 }
@@ -191,9 +195,17 @@ h6 {
   
   color: #081720;
 }
-[data-theme='dark'] .auth-field .input-group input{
+[data-theme='dark'] .input-group input{
   
   color: #f2eeee;
+}
+[data-theme='dark'] .product-card-publish-date{
+  
+  color: #0b0a0a;
+}
+[data-theme='dark'] .filters-toggle-sub input{
+  font-size: 1.75rem;
+  color: #050505;
 }
 [data-theme='dark'] .navigation{
   background: #081720;
