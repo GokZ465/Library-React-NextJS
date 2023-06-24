@@ -57,6 +57,8 @@ To add books to your cart, simply click on the "Add to Cart" button next to the 
 
 ## Admin Dashboard (Book Management)
 
+Email :  Admin@Test.Com
+Password :  Admin@123
 The Library Management Page also provides an admin dashboard specifically designed for administrators. If you have admin privileges, you can access this dashboard. In the admin dashboard, you will have the ability to manually add books to the library. Simply enter the necessary details, such as book name, author, genre, and other relevant information. Submit the form, and the newly added book will be available for users to browse and rent.
 
 ![Admin Dashboard](https://github.com/GokZ465/Library-React-NextJS/blob/main/assets/gif-admin-dashboard.gif)
