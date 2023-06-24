@@ -98,6 +98,7 @@ const Navigation = () => {
             How to
           </NavLink>
         </li>
+
         <li>
           <div className={styles.container} onClick={toggleTheme}>
             <div className={styles.icon}>🌙</div>
@@ -107,6 +108,16 @@ const Navigation = () => {
               style={theme === "light" ? { left: "2px" } : { right: "2px" }}
             />
           </div>
+        </li>
+        <li>
+          <NavLink
+            style={{ fontSize: "2.2rem" }}
+            activeClassName="navigation-menu-active"
+            to={{ pathname: "https://5jgw5z-3000.csb.app/" }}
+            target="_blank"
+          >
+            Link is Updated, Please go here!
+          </NavLink>
         </li>
         {/* <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.SHOP}>Shop</NavLink></li>
         <li><NavLink activeClassName="navigation-menu-active" to={ROUTE.RECOMMENDED_PRODUCTS}>Recommended</NavLink></li> */}
