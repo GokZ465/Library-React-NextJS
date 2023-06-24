@@ -12,6 +12,9 @@ const Home = () => {
   const [searchCount, setSearchCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [titleSortOrder, setTitleSortOrder] = useState("asc");
+  const [authorSortOrder, setAuthorSortOrder] = useState("asc");
+  const [genreSortOrder, setGenreSortOrder] = useState("asc");
 
   const calculatePrice = (title, author) => {
     const titleLength = title.length;
@@ -96,7 +99,7 @@ const Home = () => {
           });
         }
 
-        setSearchResults(books.reverse());
+        setSearchResults(books);
         setSearchCount(books.length);
         setIsLoading(false);
       })
@@ -110,12 +113,51 @@ const Home = () => {
     setPage((prevPage) => prevPage + 1); // Increment the page number
   };
 
+  const toggleTitleSortOrder = () => {
+    setTitleSortOrder((prevSortOrder) =>
+      prevSortOrder === "asc" ? "desc" : "asc"
+    );
+    setSearchResults((prevResults) =>
+      [...prevResults].sort((a, b) =>
+        titleSortOrder === "asc"
+          ? a.title.localeCompare(b.title)
+          : b.title.localeCompare(a.title)
+      )
+    );
+  };
+
+  const toggleAuthorSortOrder = () => {
+    setAuthorSortOrder((prevSortOrder) =>
+      prevSortOrder === "asc" ? "desc" : "asc"
+    );
+    setSearchResults((prevResults) =>
+      [...prevResults].sort((a, b) =>
+        authorSortOrder === "asc"
+          ? a.author.localeCompare(b.author)
+          : b.author.localeCompare(a.author)
+      )
+    );
+  };
+
+  const toggleGenreSortOrder = () => {
+    setGenreSortOrder((prevSortOrder) =>
+      prevSortOrder === "asc" ? "desc" : "asc"
+    );
+    setSearchResults((prevResults) =>
+      [...prevResults].sort((a, b) =>
+        genreSortOrder === "asc"
+          ? a.subject.localeCompare(b.subject)
+          : b.subject.localeCompare(a.subject)
+      )
+    );
+  };
+
   return (
-    <div className="featured ">
+    <div className="featured">
       <main className="content">
-        <div className=" banner">
+        <div className="banner">
           <div className="banner-desc">
-            <h1 className="text-center ">Book Search</h1>
+            <h1 className="text-center">Book Search</h1>
           </div>
           <div className="banner-img">
             <img src={bannerImg} alt="" />
@@ -123,8 +165,8 @@ const Home = () => {
         </div>
       </main>
       <div style={{ width: "100vw" }} className="container">
-        <div className="row justify-content-center mb-3 ">
-          <div className="col-6  ReactModal__Content">
+        <div className="row justify-content-center mb-3">
+          <div className="col-6 ReactModal__Content">
             <div className="input-group filters-toggle-sub">
               <input
                 type="text"
@@ -135,6 +177,14 @@ const Home = () => {
                   setTitleQuery(event.target.value);
                 }}
               />
+              <div className="sort-toggle">
+                <button
+                  className="sort-button filters-button filters-button button button-small"
+                  onClick={toggleTitleSortOrder}
+                >
+                  {titleSortOrder === "asc" ? "Ascending" : "Descending"}
+                </button>
+              </div>
               <input
                 type="text"
                 className="filters-field form-control"
@@ -144,6 +194,14 @@ const Home = () => {
                   setAuthorQuery(event.target.value);
                 }}
               />
+              <div className="sort-toggle">
+                <button
+                  className="sort-button filters-button filters-button button button-small"
+                  onClick={toggleAuthorSortOrder}
+                >
+                  {authorSortOrder === "asc" ? "Ascending" : "Descending"}
+                </button>
+              </div>
               <input
                 type="text"
                 className="filters-field form-control"
@@ -153,6 +211,14 @@ const Home = () => {
                   setGenreQuery(event.target.value);
                 }}
               />
+              <div className="sort-toggle">
+                <button
+                  className="sort-button filters-button filters-button button button-small"
+                  onClick={toggleGenreSortOrder}
+                >
+                  {genreSortOrder === "asc" ? "Ascending" : "Descending"}
+                </button>
+              </div>
               <input
                 type="text"
                 className="filters-field form-control"
@@ -191,7 +257,6 @@ const Home = () => {
                     </li>
                   ) : (
                     <>
-                      {console.log(searchResults)}
                       <ProductGrid
                         products={searchResults.slice(0, page * 30)}
                         calculatePrice={calculatePrice}

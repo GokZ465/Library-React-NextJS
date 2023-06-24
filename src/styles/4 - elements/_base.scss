@@ -180,10 +180,26 @@ h6 {
   color: #ffffff;
 }
 [data-theme='dark'] .footer span a{
-  background-color: #a5a5a5;
+  background-color: #081720;
   color: #ffffff;
 }
 [data-theme='dark'] .product-list-wrapper h2,h4{
+  
+  color: #ffffff;
+}
+[data-theme='dark'] .checkout-field .input-group input{
+  
+  color: #010101;
+}
+.checkout-checkbox-field .margin-0{
+  
+  color: #343333;
+}
+[data-theme='dark'] .product-list-wrapper h4{
+  
+  color: #ffffff;
+}
+[data-theme='dark'] .basket-total-amount{
   
   color: #ffffff;
 }
@@ -204,7 +220,7 @@ h6 {
   color: #0b0a0a;
 }
 [data-theme='dark'] .filters-toggle-sub input{
-  font-size: 1.75rem;
+ font-weight: bolder;
   color: #050505;
 }
 [data-theme='dark'] .navigation{
