@@ -29,7 +29,7 @@ const FeaturedProducts = () => {
               through the various modules and features available on this
               platform.
             </h3> */}
-            <h4>
+            <h4 className="WelcomeLib">
               Welcome to the Library Management Page! This guide will walk you
               through the various modules and features available on this
               platform.

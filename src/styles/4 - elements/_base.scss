@@ -207,6 +207,14 @@ h6 {
   
   color: #ffffff;
 }
+[data-theme='dark'] .WelcomeLib{
+  
+  color: #ffffff;
+}
+.WelcomeLib{
+  
+  color: #131325;
+}
 [data-theme='dark'] .product-list-wrapper h3{
   
   color: #ffffff;
@@ -248,4 +256,13 @@ h6 {
   .navigation-menu-main ul li {
     font-size: 0.75rem !important;
   }
+}
+
+[data-theme='dark'] .WelcomeLib{
+  
+  color: #ffffff !important;
+}
+ .WelcomeLib{
+  
+  color: #0c0b16 !important;
 }
