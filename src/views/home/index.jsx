@@ -1,7 +1,7 @@
 import { BookFilter, ProductGrid } from "@/components/product";
 import { useState, useEffect } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-
+import bannerImg from "@/images/banner-search.png";
 const Home = () => {
   const [titleQuery, setTitleQuery] = useState("");
   const [authorQuery, setAuthorQuery] = useState("");
@@ -184,106 +184,117 @@ const Home = () => {
   }, [page]);
 
   return (
-    <div className="container">
-      <h1 className="text-center">Book Search</h1>
-      <div className="row justify-content-center mb-3">
-        <div className="col-6 ReactModal__Content">
-          <div className="input-group filters-toggle-sub">
-            <input
-              type="text"
-              className="filters-field form-control search-input"
-              placeholder="Search by Title"
-              value={titleQuery}
-              onChange={(event) => {
-                setTitleQuery(event.target.value);
-              }}
-            />
-            <input
-              type="text"
-              className="filters-field form-control"
-              placeholder="Search by Author"
-              value={authorQuery}
-              onChange={(event) => {
-                setAuthorQuery(event.target.value);
-              }}
-            />
-            <input
-              type="text"
-              className="filters-field form-control"
-              placeholder="Search by Genre"
-              value={genreQuery}
-              onChange={(event) => {
-                setGenreQuery(event.target.value);
-              }}
-            />
-            <input
-              type="text"
-              className="filters-field form-control"
-              placeholder="Search by Publish Date Range (e.g., 2000-2010)"
-              value={publishDateRange}
-              onChange={(event) => {
-                setPublishDateRange(event.target.value);
-              }}
-            />
-            <button
-              className="filters-button filters-button button button-small"
-              onClick={searchBooks}
-              disabled={isLoading}
-            >
-              Search
-            </button>
-            <BookFilter searchCount={searchCount} />
+    <div className="featured ">
+      <main className="content">
+        <div className=" banner">
+          <div className="banner-desc">
+            <h1 className="text-center ">Book Search</h1>
+          </div>
+          <div className="banner-img">
+            <img src={bannerImg} alt="" />
           </div>
         </div>
-      </div>
-      <div className="row justify-content-center">
-        <div className="col-6">
-          {isLoading ? (
-            <SkeletonTheme color="#f3f3f3" highlightColor="#ecebeb">
-              <Skeleton height={150} count={3} />
-            </SkeletonTheme>
-          ) : (
-            <div>
-              <p className="text-center">
-                Search results: {searchCount} books found
-              </p>
-              <ul className="list-group">
-                {searchResults.length === 0 ? (
-                  <li className="list-group-item text-center">
-                    No results found
-                  </li>
-                ) : (
-                  <>
-                    {console.log(searchResults)}
-                    <ProductGrid
-                      products={searchResults.slice(0, page * 30)}
-                      calculatePrice={calculatePrice}
-                    />
-                    {searchResults.length > page * 30 && (
-                      <li className="list-group-item text-center">
-                        {isLoading ? (
-                          <SkeletonTheme
-                            color="#f3f3f3"
-                            highlightColor="#ecebeb"
-                          >
-                            <Skeleton width={120} height={40} />
-                          </SkeletonTheme>
-                        ) : (
-                          <button
-                            className="btn btn-primary"
-                            onClick={loadMoreBooks}
-                            disabled={isLoading}
-                          >
-                            Load More
-                          </button>
-                        )}
-                      </li>
-                    )}
-                  </>
-                )}
-              </ul>
+      </main>
+      <div style={{ width: "100vw" }} className="container">
+        <div className="row justify-content-center mb-3 ">
+          <div className="col-6  ReactModal__Content">
+            <div className="input-group filters-toggle-sub">
+              <input
+                type="text"
+                className="filters-field form-control search-input"
+                placeholder="Search by Title"
+                value={titleQuery}
+                onChange={(event) => {
+                  setTitleQuery(event.target.value);
+                }}
+              />
+              <input
+                type="text"
+                className="filters-field form-control"
+                placeholder="Search by Author"
+                value={authorQuery}
+                onChange={(event) => {
+                  setAuthorQuery(event.target.value);
+                }}
+              />
+              <input
+                type="text"
+                className="filters-field form-control"
+                placeholder="Search by Genre"
+                value={genreQuery}
+                onChange={(event) => {
+                  setGenreQuery(event.target.value);
+                }}
+              />
+              <input
+                type="text"
+                className="filters-field form-control"
+                placeholder="Search by Publish Date Range (e.g., 2000-2010)"
+                value={publishDateRange}
+                onChange={(event) => {
+                  setPublishDateRange(event.target.value);
+                }}
+              />
+              <button
+                className="filters-button filters-button button button-small"
+                onClick={searchBooks}
+                disabled={isLoading}
+              >
+                Search
+              </button>
+              <BookFilter searchCount={searchCount} />
             </div>
-          )}
+          </div>
+        </div>
+        <div className="row justify-content-center">
+          <div className="col-6">
+            {isLoading ? (
+              <SkeletonTheme color="#f3f3f3" highlightColor="#ecebeb">
+                <Skeleton height={150} count={3} />
+              </SkeletonTheme>
+            ) : (
+              <div>
+                <p className="text-center">
+                  Search results: {searchCount} books found
+                </p>
+                <ul className="list-group">
+                  {searchResults.length === 0 ? (
+                    <li className="list-group-item text-center">
+                      No results found
+                    </li>
+                  ) : (
+                    <>
+                      {console.log(searchResults)}
+                      <ProductGrid
+                        products={searchResults.slice(0, page * 30)}
+                        calculatePrice={calculatePrice}
+                      />
+                      {searchResults.length > page * 30 && (
+                        <li className="list-group-item text-center">
+                          {isLoading ? (
+                            <SkeletonTheme
+                              color="#f3f3f3"
+                              highlightColor="#ecebeb"
+                            >
+                              <Skeleton width={120} height={40} />
+                            </SkeletonTheme>
+                          ) : (
+                            <button
+                              className="btn btn-primary"
+                              onClick={loadMoreBooks}
+                              disabled={isLoading}
+                            >
+                              Load More
+                            </button>
+                          )}
+                        </li>
+                      )}
+                    </>
+                  )}
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
