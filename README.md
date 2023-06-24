@@ -1,5 +1,7 @@
 # Library-React-NextJS
-Working Deployment Link :        https://5jgw5z-3000.csb.app/
+Something went wrong with Netlify Hosting and got errors so here is the Working Deployment Link in codeSandBOx :        https://5jgw5z-3000.csb.app/
+
+
 # Library Management Page
 
 Welcome to the Library Management Page! This guide will walk you through the various modules and features available on this platform.
