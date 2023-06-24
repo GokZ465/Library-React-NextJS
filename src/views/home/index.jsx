@@ -1,7 +1,8 @@
 import { BookFilter, ProductGrid } from "@/components/product";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import bannerImg from "@/images/banner-search.png";
+
 const Home = () => {
   const [titleQuery, setTitleQuery] = useState("");
   const [authorQuery, setAuthorQuery] = useState("");
@@ -11,24 +12,12 @@ const Home = () => {
   const [searchCount, setSearchCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
+
   const calculatePrice = (title, author) => {
     const titleLength = title.length;
     const authorLength = author.length;
     return titleLength + authorLength;
   };
-  useEffect(() => {
-    if (
-      titleQuery.trim() === "" &&
-      authorQuery.trim() === "" &&
-      genreQuery.trim() === "" &&
-      publishDateRange.trim() === ""
-    ) {
-      setSearchResults([]);
-      setSearchCount(0);
-    } else {
-      searchBooks();
-    }
-  }, [titleQuery, authorQuery, genreQuery, publishDateRange]);
 
   const searchBooks = () => {
     setIsLoading(true);
@@ -120,68 +109,6 @@ const Home = () => {
   const loadMoreBooks = () => {
     setPage((prevPage) => prevPage + 1); // Increment the page number
   };
-
-  useEffect(() => {
-    if (page > 1) {
-      setIsLoading(true);
-      let searchUrl = "https://openlibrary.org/search.json?";
-      const startIndex = (page - 1) * 30;
-
-      if (titleQuery.trim() !== "") {
-        searchUrl += `title=${encodeURIComponent(titleQuery)}&`;
-      }
-
-      if (authorQuery.trim() !== "") {
-        searchUrl += `author=${encodeURIComponent(authorQuery)}&`;
-      }
-
-      if (genreQuery.trim() !== "") {
-        searchUrl += `subject=${encodeURIComponent(genreQuery)}&`;
-      }
-
-      searchUrl += `start=${startIndex}&`;
-
-      fetch(searchUrl)
-        .then((response) => response.json())
-        .then((data) => {
-          let books = data.docs.map((book) => {
-            const coverUrl = `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`;
-            const randomNum = Math.floor(Math.random() * 10000);
-            const bookId = book.key;
-
-            return {
-              id: bookId,
-              title: book.title,
-              author: book.author_name?.join(", ") || "Unknown Author",
-              publishDate: book.publish_date?.[0] || "Unknown Publish Date",
-              coverUrl: book.cover_i ? coverUrl : null,
-              coverUrls: coverUrls,
-              price: calculatePrice(
-                book.title,
-                book.author_name?.join(", ") || "Unknown Author"
-              ),
-              quantity: 1,
-              description: book.description || "",
-              publisher: book.publisher || "",
-              isbn: book.isbn ? book.isbn[0] : "",
-              edition: book.edition_key ? book.edition_key[0] : "",
-              language: book.language ? book.language[0] : "",
-              subject: book.subject ? book.subject.join(", ") : "",
-              contributor: book.contributor ? book.contributor.join(", ") : "",
-              numberOfPages: book.number_of_pages || 0,
-              publishPlace: book.publish_place ? book.publish_place[0] : "",
-            };
-          });
-
-          setSearchResults((prevResults) => [...prevResults, ...books]);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.log("Book Load More Error:", error);
-          setIsLoading(false);
-        });
-    }
-  }, [page]);
 
   return (
     <div className="featured ">
