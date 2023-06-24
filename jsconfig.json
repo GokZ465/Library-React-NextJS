@@ -7,5 +7,5 @@
   },
   "include": [
     "./src"
-  ]
+, "public/sw-src.js"  ]
 }
