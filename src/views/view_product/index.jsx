@@ -137,6 +137,7 @@ const ViewProduct = (props) => {
                 <br />
                 <br />
                 <Select
+                  
                   placeholder="--Available--"
                   onChange={onSelectedSizeChange}
                   options={product

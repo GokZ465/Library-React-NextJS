@@ -84,14 +84,14 @@ const Navigation = () => {
             activeClassName="navigation-menu-active"
             exact
             to={ROUTE.HOME}
-            style={{ fontSize: "2.5rem" }}
+            style={{ fontSize: "2.2rem" }}
           >
             Home
           </NavLink>
         </li>
         <li>
           <NavLink
-            style={{ fontSize: "2.5rem" }}
+            style={{ fontSize: "2.2rem" }}
             activeClassName="navigation-menu-active"
             to={ROUTE.FEATURED_PRODUCTS}
           >

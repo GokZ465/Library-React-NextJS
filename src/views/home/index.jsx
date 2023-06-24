@@ -261,6 +261,7 @@ const Home = () => {
                         products={searchResults.slice(0, page * 30)}
                         calculatePrice={calculatePrice}
                       />
+                      {console.log(searchResults)}
                       {searchResults.length > page * 30 && (
                         <li className="list-group-item text-center">
                           {isLoading ? (

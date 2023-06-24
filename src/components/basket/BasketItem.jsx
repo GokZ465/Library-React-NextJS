@@ -45,7 +45,12 @@ const BasketItem = ({ product }) => {
               </h5>
             </div>
             <div>
-              <span className="spec-title">Availability</span>
+              <span
+                
+                className="spec-title"
+              >
+                Availability 
+              </span>
 
               <CheckOutlined
                 className="fa fa-check "
